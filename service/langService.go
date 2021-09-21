@@ -8,6 +8,8 @@ import (
 	str "task/struct"
 )
 
+var Languages *str.Lang
+
 func LangPost(w http.ResponseWriter, r *http.Request) str.ResponseRelation {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
@@ -24,8 +26,7 @@ func LangPost(w http.ResponseWriter, r *http.Request) str.ResponseRelation {
 		return response
 	}
 
-	var msg str.Lang
-	errMarshal := json.Unmarshal(c, &msg)
+	errMarshal := json.Unmarshal(c, &Languages)
 
 	if errMarshal != nil {
 		response.Status = 500
@@ -33,16 +34,25 @@ func LangPost(w http.ResponseWriter, r *http.Request) str.ResponseRelation {
 		return response
 	}
 
-
-
 	response.Status = 200
-	response.Desc = msg
-	fmt.Println("Language", msg.Language)
-	fmt.Println("Appeared", msg.Appeared)
-	fmt.Println("Created", msg.Created)
-	fmt.Println("Functional", msg.Functional)
-	fmt.Println("ObjectOriented", msg.ObjectOriented)
-	fmt.Println("InfluencedBy", msg.Relation.InfluencedBy)
-	fmt.Println("Influences", msg.Relation.InfluencedBy)
+	response.Desc = Languages
+	//fmt.Println("Language", msg.Language)
+	//fmt.Println("Appeared", msg.Appeared)
+	//fmt.Println("Created", msg.Created)
+	//fmt.Println("Functional", msg.Functional)
+	//fmt.Println("ObjectOriented", msg.ObjectOriented)
+	//fmt.Println("InfluencedBy", msg.Relation.InfluencedBy)
+	//fmt.Println("Influences", msg.Relation.InfluencedBy)
+	return response
+}
+
+func GetPost(w http.ResponseWriter, r *http.Request) str.ResponseRelation {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	var response str.ResponseRelation
+	response.Status = 200
+	response.Desc = Languages
 	return response
 }

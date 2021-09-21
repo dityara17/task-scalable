@@ -18,3 +18,13 @@ func SendResponses(rw http.ResponseWriter, pl interface{}) {
 	}
 }
 
+// StatusNotAllowed is used to set a specific status code
+func StatusNotAllowed(code int, allow ...string) func(w http.ResponseWriter, req *http.Request) {
+	return func(w http.ResponseWriter, req *http.Request) {
+		w.WriteHeader(code)
+		if len(allow) > 0 {
+			w.Write([]byte(`Method not allowed ` ))
+		}
+	}
+}
+
